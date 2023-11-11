@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --color-primary: #6D21D9;
+    --color-primary-light: rgba(179, 130, 248, 0.70);
+    --color-accent: #F8F130;
+    --color-success-green: #29CC5F;
+    --color-success-light-green: hsl(156, 33, 84);
+    --color-warning-orange: #E39517;
+    --color-success-light-orange: hsl(25, 47, 86);
+    --color-danger-red: #E5202A;
+    --color-success-light-red: hsl(343, 56, 84);
+    --color-information-blue: #1C5FE5;
+    --color-primary-100: #D8C7EF;
+    --color-primary-300: #9B5AF6;
+    --color-primary-700: #4601A7;
+    --color-primary-900: #1A003D;
+
+    /*TEXT XOLORS*/
+    --color-text-heading: #100322;
+    --color-text-paragraph: #322D39;;
+    --color-light-grey: #EFE9F6; 
+
+    /*TRASITION SPEED*/
+    --transition: all 300ms ease;
+
+    /*BORDER RADIUS*/
+    --button-border-radius: 4px;
+    --card-border-radius: 10px;
+    --table-border-radius: 10px; 
+}
+
+/*#########################################  GENERAL STYLES  ############################################*/
+*{
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    appearance: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box; 
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    line-height: 1.6;
+    color: --color;
+    overflow-x: auto;
+    background-color: #EFE9F6;
+}
+
+a {
+    color: white;
+    transition: var(--transition);
+}
+
+img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+}
+
+.highlight {
+    background-color: var(--color-primary-100);
+}
+
+.smallGreyText{
+    color: var(--color-text-paragraph);
+    transition: var(--transition);
+}
+
+
+/* ((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((signinPHP))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))) */
+
+.signInPageBody{
+    /* background-image: url('images/signInBackgroundVisual.svg'); */
+    display: grid;
+    place-items: center;
+}
+
+.signInLogo{
+    max-width: 200px;
+    max-height: 200px;   
+}
+
+.logInformContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 75%;
+    height: 500px;
+    place-items: center;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+}
+
+.forgotPassword a:hover{
+    font-size: 14px;
+}
+
+
+
+  
