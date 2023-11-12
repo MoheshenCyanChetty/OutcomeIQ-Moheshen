@@ -3,21 +3,62 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 ////////////////INDEX.PHP TABLE CHECKBOXES?///////////////////////
-const checkboxes = document.querySelectorAll('.recordCheckbox');
+const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+const floatingButtons = document.querySelector('.floatingButtons');
 
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            const checkedCheckboxes = Array.from(checkboxes).filter(cb => cb.checked);
-            checkbox.closest('tr').classList.toggle('highlight', checkbox.checked);
-        
-            // Disable all other checkboxes when at least one is checked
-            checkboxes.forEach(cb => {
-                if (cb !== checkbox) {
-                    cb.disabled = checkedCheckboxes.length > 0;
-                }
-            });
-        });
+function handleCheckboxChange(checkbox) {
+    const row = checkbox.closest('tr');
+    checkboxes.forEach(cb => {
+        if (cb !== checkbox) {
+            cb.checked = false;
+            const otherRow = cb.closest('tr');
+            otherRow.classList.remove('highlight');
+        }
     });
+
+    checkboxes.forEach(cb => {
+        if (cb !== checkbox) {
+            cb.disabled = checkbox.checked;
+        }
+    });
+
+    // Toggle the 'highlight' class on the closest row
+    row.classList.toggle('highlight', checkbox.checked);
+
+    // Show/hide the floatingButtons based on whether a row is selected
+    floatingButtons.style.display = checkbox.checked ? 'block' : 'none';
+}
+
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+        handleCheckboxChange(checkbox);
+    });
+});
+
+document.querySelectorAll('tr').forEach(row => {
+    row.addEventListener('click', () => {
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        checkbox.checked = !checkbox.checked;
+        handleCheckboxChange(checkbox);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+// table borders
+
+
+
+
+  
+
 
 
 

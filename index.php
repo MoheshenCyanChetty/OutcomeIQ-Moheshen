@@ -47,10 +47,9 @@ require_once('partials/navBarWithSearch.php'); //Includes navigation bar with se
             CONCAT(s.FirstName, ' ', s.LastName) AS 'Student Name',
             ts1.Score AS 'CA Test 1',
             ts2.Score AS 'CA Test 2',
-            s.markToPassCa2 AS 'Ca Test 2',
-            s.markToPassAssignment AS 'Assignment',
             s.markToPassExam AS 'Exam',
-            s.RiskLevel AS 'Risk'
+            s.RiskLevel AS 'Risk',
+            s.LecturersComment AS 'Comment'
         FROM tblStudent s
         INNER JOIN tblTestScore ts1 ON s.StudentID = ts1.StudentID AND ts1.TestTypeID = 1
         INNER JOIN tblTestScore ts2 ON s.StudentID = ts2.StudentID AND ts2.TestTypeID = 2
@@ -70,10 +69,9 @@ require_once('partials/navBarWithSearch.php'); //Includes navigation bar with se
                     <th>Student Name</th>
                     <th>CA Test 1</th>
                     <th>CA Test 2</th>
-                    <th>Ca Test 2</th>
-                    <th>Assignment</th>
                     <th>Exam</th>
                     <th>Risk</th>
+                    <th>Comment</th>
                 </tr>
             </thead>
             <tbody>
@@ -85,10 +83,9 @@ require_once('partials/navBarWithSearch.php'); //Includes navigation bar with se
                     echo '<td>' . $row['Student Name'] . '</td>';
                     echo '<td>' . $row['CA Test 1'] . '</td>';
                     echo '<td>' . $row['CA Test 2'] . '</td>';
-                    echo '<td>' . $row['Ca Test 2'] . '</td>';
-                    echo '<td>' . $row['Assignment'] . '</td>';
                     echo '<td>' . $row['Exam'] . '</td>';
                     echo '<td>' . $row['Risk'] . '</td>';
+                    echo '<td>' . $row['Comment'] . '</td>';
                     echo '</tr>';
                 }
                 ?>
@@ -101,6 +98,8 @@ require_once('partials/navBarWithSearch.php'); //Includes navigation bar with se
     </div>
 
     <!--------------------------END OF TABLE------------------------->
+                <!-- remove later -->
+    <div class="floatingButtons">Button float</div> 
 
 
 </div> <!--main section container-->   
