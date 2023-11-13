@@ -1,16 +1,16 @@
-<?php 
-require_once('config/database.php');
-// $_SESSION['userStatus'] = 1; //keeps the stataus of user (admin or NOT)
-// $_SESSION['lecturerID'] = 1 //keeps the lecturerID which is used to see which Modules/Electives he teaches
+<?php
+
+// if(!isset($_SESSION['userStatus'])){
+//     header('Location: signin.php');      //redirects user if he tries to acces index.php without sigining in
+//     exit();
+// }
+
+require_once('partials/headSection.php'); //Includes top part of hmtl tags, database connection(which includes constants.php) ,common styles.css, main.js, font-awesome CDN connection(let's u use icons straight from the web without having to download them), .
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--CSS-->
-    <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/sign-in.css"> <!--page custom css file-->
+
     <title>Sign in to OutcomeIQ</title>
 </head>
 <body class="signInPageBody">
