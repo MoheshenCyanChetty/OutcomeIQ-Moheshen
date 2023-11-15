@@ -75,6 +75,11 @@ tr.no-hover:hover {
     transition: var(--transition);
 }
 
+.hidden-element{
+    display: none;
+}
+
+
 
 /*##################################  NAVIGATION BAR  ####################################*/
 nav {

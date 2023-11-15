@@ -34,7 +34,31 @@ require_once('partials/navBarWithSearch.php'); //Includes navigation bar with se
 
     <!--BUTTON SECTION-->
     <div class="buttonSectionContainer">
+        <div class="left-buttons">
+            <form class="upload-mark-form" action="index.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+                <button type="button" onclick="showImportButton()">Import <i class="fa fa-upload"></i></button>
 
+                <div class="uploadBox upload-hide" id="fileInput">
+                    <input class="file-upload-button" type="file" name="file" accept=".txt,.csv">
+                    <input class="file-submit-button" type="submit" value="Upload">
+                </div>
+
+
+            </form>
+
+            <form action="charts.php" method="post">
+                <button type="submit">Charts <i class="fa fa-chart-simple"></i></button>
+            </form>
+        
+        </div>
+
+
+        <!-- Rigth Buttons -->
+        <div class="right-buttons">
+            <button onclick="showSortingOptions()">Sorting <i class="fa fa-chevron-down"></i></button>
+
+            <button onclick="showFilteringOptions()">Filtering <i class="fa fa-filter"></i></button>   
+        </div>    
     </div>
 
 
@@ -99,7 +123,7 @@ require_once('partials/navBarWithSearch.php'); //Includes navigation bar with se
 
     <!--------------------------END OF TABLE------------------------->
                 <!-- remove later -->
-    <div class="floatingButtons">Button float</div> 
+    <div class="hidden-element floatingButtons">Button float</div> 
 
 
 </div> <!--main section container-->   
