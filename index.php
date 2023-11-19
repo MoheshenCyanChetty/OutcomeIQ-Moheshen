@@ -9,7 +9,7 @@ require_once('partials/headSection.php'); //Includes top part of hmtl tags, data
 
 ?>
 
-<link rel="stylesheet" href="css/index.css"> <!--page custom css file-->
+<link rel="stylesheet" href="css/index.css?v=<?php echo time();?>"> <!--page custom css file-->
 
 </head> <!--Head closing tag is left here so that you can add additional links to the head section such as custom CSS files as seen above-->
 
@@ -20,115 +20,131 @@ require_once('partials/headSection.php'); //Includes top part of hmtl tags, data
 
 <body> <!--start of body-->
 
-<?php
-require_once('partials/navBarWithSearch.php'); //Includes navigation bar with searchbox to search students
-?>
-<!------------------END OF NAVIGATION BAR----------------------->
+    <?php
+    require_once('partials/navBarWithSearch.php'); //Includes navigation bar with searchbox to search students
+    ?>
+    <!------------------END OF NAVIGATION BAR----------------------->
 
-<div class="mainSectionContainer">
+    <div class="mainSectionContainer">
 
-    <!--SIDE BAR-->
-    <div class="sideBarContainer">
+        <!--SIDE BAR-->
+        <div class="sideBarContainer">
 
-    </div>
+        </div>
 
-    <!--BUTTON SECTION-->
-    <div class="buttonSectionContainer">
-        <div class="left-buttons">
-            <form class="upload-mark-form" action="index.php" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
-                <button type="button" onclick="showImportButton()">Import <i class="fa fa-upload"></i></button>
+        <!--BUTTON SECTION-->
+        <div class="buttonSectionContainer">
+            <div class="left-buttons">
 
-                <div class="uploadBox upload-hide" id="fileInput">
-                    <input class="file-upload-button" type="file" name="file" accept=".txt,.csv">
-                    <input class="file-submit-button" type="submit" value="Upload">
+                <div class="upload-container">
+                    <button onclick="toggleUploadBox()">Import <i class="fa fa-add"></i></button>
+
+                    <div class="uploadBox card-styling" id="fileInput">
+                        <form action="index.php" method="post" enctype="multipart/form-data">
+
+                            <div class="radio-buttons">
+                                <label><input type="radio" name="testType" 
+                               checked="true" value="CA_Test_1"> CA Test 1</label>
+                                <label><input type="radio" name="testType" value="CA_Test_2"> CA Test 2</label>
+                                <label><input type="radio" name="testType" value="Assignment"> Assignment</label>
+                            </div>
+
+                            <input class="file-upload-button" type="file" name="file" accept=".csv">
+                            <button class="file-submit-button" type="submit">Upload<i class="fa fa-upload"></i></button>
+                        </form>
+                    </div>
                 </div>
 
 
-            </form>
 
-            <form action="charts.php" method="post">
-                <button type="submit">Charts <i class="fa fa-chart-simple"></i></button>
-            </form>
-        
+                <form class="charts-button" action="charts.php" method="post">
+                    <button type="submit">Charts <i class="fa fa-chart-simple"></i></button>
+                </form>
+
+            </div>
+
+
+            <!-- Rigth Buttons -->
+            <div class="right-buttons">
+                <button onclick="showSortingOptions()">Sorting <i class="fa fa-chevron-down"></i></button>
+
+                <button onclick="showFilteringOptions()">Filter <i class="fa fa-filter"></i></button>
+            </div>
         </div>
 
 
-        <!-- Rigth Buttons -->
-        <div class="right-buttons">
-            <button onclick="showSortingOptions()">Sorting <i class="fa fa-chevron-down"></i></button>
+        <!--STUDENTS TABLE-->
+        <?php
 
-            <button onclick="showFilteringOptions()">Filtering <i class="fa fa-filter"></i></button>   
-        </div>    
-    </div>
-
-
-    <!--STUDENTS TABLE-->
-    <?php
-
-    $SQLquery = "
+        $SQLquery = "
         SELECT DISTINCT
             s.StudentNumber,
             CONCAT(s.FirstName, ' ', s.LastName) AS 'Student Name',
             ts1.Score AS 'CA Test 1',
             ts2.Score AS 'CA Test 2',
+            ts3.Score AS 'Assignment',
             s.markToPassExam AS 'Exam',
             s.RiskLevel AS 'Risk',
             s.LecturersComment AS 'Comment'
         FROM tblStudent s
         INNER JOIN tblTestScore ts1 ON s.StudentID = ts1.StudentID AND ts1.TestTypeID = 1
         INNER JOIN tblTestScore ts2 ON s.StudentID = ts2.StudentID AND ts2.TestTypeID = 2
+        INNER JOIN tblTestScore ts3 ON s.StudentID = ts3.StudentID AND ts3.TestTypeID = 3
         INNER JOIN tblModule m ON s.CourseID = m.CourseID AND m.LecturerID = 5 AND m.ModuleID = 15  
         WHERE m.CourseID IN (SELECT CourseID FROM tblCourse)";
 
-    // Fetch data from the database using the provided SQL query
-    $result = $connection->query($SQLquery);
-    ?>
-
-    <div class="tableContainer">
-        <table>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Student Number</th>
-                    <th>Student Name</th>
-                    <th>CA Test 1</th>
-                    <th>CA Test 2</th>
-                    <th>Exam</th>
-                    <th>Risk</th>
-                    <th>Comment</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                while ($row = $result->fetch_assoc()) {
-                    echo '<tr>';
-                    echo '<td><input type="checkbox" class="recordCheckbox" name="selectedRecord" value="' . $row['StudentNumber'] . '" onchange="handleCheckboxChange(this)"></td>';
-                    echo '<td>' . $row['StudentNumber'] . '</td>';
-                    echo '<td>' . $row['Student Name'] . '</td>';
-                    echo '<td>' . $row['CA Test 1'] . '</td>';
-                    echo '<td>' . $row['CA Test 2'] . '</td>';
-                    echo '<td>' . $row['Exam'] . '</td>';
-                    echo '<td>' . $row['Risk'] . '</td>';
-                    echo '<td>' . $row['Comment'] . '</td>';
-                    echo '</tr>';
-                }
-                ?>
-            </tbody>
-        </table>
-        <?php
-        
-        $connection->close();
+        // Fetch data from the database using the provided SQL query
+        $result = $connection->query($SQLquery);
         ?>
-    </div>
 
-    <!--------------------------END OF TABLE------------------------->
-                <!-- remove later -->
-    <div class="hidden-element floatingButtons">Button float</div> 
+        <div class="table-section-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Student Number</th>
+                        <th>Student Name</th>
+                        <th>CA Test 1</th>
+                        <th>CA Test 2</th>
+                        <th id="assign-header">Assignment</th>
+                        <th>Exam</th>
+                        <th>Risk</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<tr>';
+                        echo '<td><input type="checkbox" class="recordCheckbox" name="selectedRecord" value="' . $row['StudentNumber'] . '" onchange="handleCheckboxChange(this)"></td>';
+                        echo '<td>' . $row['StudentNumber'] . '</td>';
+                        echo '<td>' . $row['Student Name'] . '</td>';
+                        echo '<td>' . $row['CA Test 1'] . '</td>';
+                        echo '<td>' . $row['CA Test 2'] . '</td>';
+                        echo '<td>' . $row['Assignment'] . '</td>';
+                        echo '<td>' . $row['Exam'] . '</td>';
+                        echo '<td>' . $row['Risk'] . '</td>';
+                        echo '<td>' . $row['Comment'] . '</td>';
+                        echo '</tr>';
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <?php
+
+            $connection->close();
+            ?>
+        </div>
+
+        <!--------------------------END OF TABLE------------------------->
+        <!-- remove later -->
+        <div class="hidden-element floatingButtons">Button float</div>
 
 
-</div> <!--main section container-->   
+    </div> <!--main section container-->
 
 
 
 </body>
+
 </html>
