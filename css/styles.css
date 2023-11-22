@@ -15,6 +15,7 @@
   --color-primary-300: #9b5af6;
   --color-primary-700: #4601a7;
   --color-primary-900: #1a003d;
+  --color-grey-backgrund: #efe9f6;
 
   /*TEXT XOLORS*/
   --color-text-heading: #100322;
@@ -30,7 +31,11 @@
   --table-border-radius: 10px;
 
   /* BOX SHADOW */
-  --box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  --box-shadow: 0 3px 6px 1px rgba(0, 0, 0, 2.15);
+
+  /* VERY TOP Z-INDEX */
+  --z-index-100: 100;
+
 }
 
 /*####################################  GENERAL STYLES  #######################################*/
@@ -49,7 +54,7 @@ body {
   line-height: 1.6;
   color: --color;
   overflow-x: auto;
-  background-color: #efe9f6;
+  background-color: var(--color-grey-backgrund);
 }
 
 a {
@@ -84,12 +89,12 @@ tr.no-hover:hover {
 /*##################################  NAVIGATION BAR  ####################################*/
 nav {
   max-height: 48px;
-
   width: 100%;
-  max-width: 100vw;
   overflow: hidden;
-  /* position: fixed; */
-  z-index: 100;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: var(--z-index-100);
 }
 
 .navContainer {

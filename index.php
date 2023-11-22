@@ -70,7 +70,7 @@ require_once('partials/headSection.php'); //Includes top part of hmtl tags, data
 
                 <button onclick="showFilteringOptions()">Filter <i class="fa fa-filter"></i></button>
             </div>
-        </div>
+        </div> <!--END OF BUTTON SECTION-->
 
 
         <!--STUDENTS TABLE-->
@@ -98,6 +98,11 @@ require_once('partials/headSection.php'); //Includes top part of hmtl tags, data
         ?>
 
         <div class="table-section-container">
+
+            <div class="stats-section">
+                
+            </div>
+
             <table>
                 <thead>
                     <tr>
