@@ -133,7 +133,7 @@
         }
 
         // form submission action -- change later, grab data from database instead of form
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") { // convert to function format for iteration in table
             $caTest1Score = $_POST['caTest1'] ?? 0;
             $caTest2Score = $_POST['caTest2'] ?? 0;
             $assignmentScore = $_POST['assignment'] ?? 0;
