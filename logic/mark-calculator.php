@@ -117,35 +117,53 @@
             }
         }
 
-        // form submission action
+
+        // calc risk level
+        function calc_RiskLevel($probability){
+            if ($probability <= ((1 / 3) * 100)){
+                return "High";
+
+            } elseif ($probability <= ((2 / 3) * 100)){
+                return "Medium";
+
+            } else {
+                return "Low";
+
+            }
+        }
+
+        // form submission action -- change later, grab data from database instead of form
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $caTest1Score = $_POST['caTest1'] ?? 0;
             $caTest2Score = $_POST['caTest2'] ?? 0;
             $assignmentScore = $_POST['assignment'] ?? 0;
-
+        
             $requiredFinalMark = 50;
-
+        
+            $shouldUseAssignmentScore = $assignmentScore != 0;
+        
             // assignment mark checker - runs the respective functions if assignment mark exists
-            if ($assignmentScore != 0) {
-                $requiredFinalExamMark = calc_ReqFinalMark_Assignment($caTest1Score, $caTest2Score, $assignmentScore);
-                $probability = calc_probability_assignment($caTest1Score, $caTest2Score, $assignmentScore, $requiredFinalMark);
+            $requiredFinalExamMark = $shouldUseAssignmentScore
+                ? calc_ReqFinalMark_Assignment($caTest1Score, $caTest2Score, $assignmentScore) 
+                : calc_ReqFinalMark($caTest1Score, $caTest2Score);
+        
+            $probability = $shouldUseAssignmentScore
+                ? calc_probability_assignment($caTest1Score, $caTest2Score, $assignmentScore, $requiredFinalMark)
+                : calc_probability($caTest1Score, $caTest2Score, $requiredFinalMark);
+        
+            $riskLevel = calc_RiskLevel($probability);
+        
+            $requiredFinalExamMark = number_format(round($requiredFinalExamMark, 2), 2);
+            $probability = number_format(round($probability, 2), 2);
+        
+            $accuracy = $shouldUseAssignmentScore; // boolean for accuracy, if true High Accuracy if false, low accuracy
 
-                $requiredFinalExamMark = number_format(round($requiredFinalExamMark, 2), 2);
-                $probability = number_format(round($probability, 2), 2);
+            // testing, delete the below later
+            $accuracyString = $shouldUseAssignmentScore ? "High Accuracy Prediction": "Low Accuracy Prediciton";
 
-                echo "<p>High Accuracy Prediction: You would need to score at least {$requiredFinalExamMark}% in the final exam to achieve a minimum pass mark of {$requiredFinalMark}%.</p>";
-                echo "<p>The probability of achieving the required final mark is approximately {$probability}%.</p>";
-
-            } else {
-                $requiredFinalExamMark = calc_ReqFinalMark($caTest1Score, $caTest2Score);
-                $probability = calc_probability($caTest1Score, $caTest2Score, $requiredFinalMark);
-
-                $requiredFinalExamMark = number_format(round($requiredFinalExamMark, 2), 2);
-                $probability = number_format(round($probability, 2), 2);
-
-                echo "<p>Low Accuracy Prediction: You would need to score at least {$requiredFinalExamMark}% in the final exam to achieve a minimum pass mark of {$requiredFinalMark}%.</p>";
-                echo "<p>The probability of achieving the required final mark is approximately {$probability}%.</p>";
-            }
+            echo "<p>You would need to score at least <b>{$requiredFinalExamMark}%</b> in the final exam to achieve a minimum pass mark of <b>{$requiredFinalMark}%.</b></p>";
+            echo "<p>{$accuracyString}: <b>{$probability}%</b></p>";
+            echo "<p>Risk Level: <b>{$riskLevel}</b></p>";
         }
 
         ?>
