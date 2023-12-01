@@ -5,7 +5,7 @@
   --color-primary-light: rgba(179, 130, 248, 0.7);
   --color-accent: #f8f130;
   --color-success-green: #29cc5f;
-  --color-success-light-green: hsl(156, 33, 84);
+  --color-success-light-green: rgba(41, 204, 95, 0.35);
   --color-warning-orange: #e39517;
   --color-success-light-orange: hsl(25, 47, 86);
   --color-danger-red: #e5202a;
@@ -31,7 +31,7 @@
   --table-border-radius: 10px;
 
   /* BOX SHADOW */
-  --box-shadow: 0 3px 6px 1px rgba(0, 0, 0, 2.15);
+  --box-shadow: 4px 2px 5px rgba(0, 0, 0, 0.35);
 
   /* VERY TOP Z-INDEX */
   --z-index-100: 100;
@@ -85,13 +85,16 @@ tr.no-hover:hover {
   display: none;
 }
 
+button {
+  cursor: pointer;
+}
 
 /*##################################  NAVIGATION BAR  ####################################*/
 nav {
   max-height: 48px;
   width: 100%;
   overflow: hidden;
-  position: sticky;
+  position: fixed;
   top: 0;
   width: 100%;
   z-index: var(--z-index-100);
@@ -150,7 +153,4 @@ nav {
   place-items: center;
 }
 
-#openNavButton,
-#closeNavButton {
-  display: none;
-}
+

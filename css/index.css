@@ -3,7 +3,7 @@
 /*################################  MAIN SECTION  ##################################*/
 .mainSectionContainer {
   display: grid;
-  grid-template-columns: 283px 1fr;
+  grid-template-columns: 283px auto;
   grid-template-rows: 75px auto;
   height: auto;
 }
@@ -12,14 +12,134 @@
 .sideBarContainer {
   grid-row: 1 / 3;
   height: 100vh;
-  z-index: 50;
+  width: 283px;
+  z-index: 99;
   background-color: var(--color-grey-backgrund);
-  background-color: blue;
   position: fixed;
   top: 48px;
-  /* left: 248px;  **************************** */
-  /* position: fixed; */
+  left: 0px;
+  border-right: 1px solid #2a2a2a;
 }
+
+.nav-top-section > div.inactive{
+  display: none;
+}
+
+.nav-top-section {
+  display: flex;
+  justify-content: space-around;
+  gap: 3rem;
+  align-items: center;
+  padding: 10px 0;
+  cursor: pointer; 
+  transform: var(--transition);   
+}
+
+.nav-top-section > button > i {
+  padding: 10px;
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+} 
+
+.nav-top-section > h2 {
+  color: var(--color-text-heading);
+}
+
+#closeNavButton {
+  color: var(--color-text-heading);
+}
+
+.nav-top-section:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.nav-middle-section {
+  padding: 0.8rem 1.6rem;
+}
+
+.nav-middle-section h3 {
+  text-wrap: nowrap;
+  width: 232px;
+  max-width: 232px;
+  padding: 12px 20px;
+  margin: 10px 0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: all 60ms ease-in;
+}
+
+.nav-middle-section h3:not(.active) {
+  border-radius: 0px;
+}
+
+.nav-middle-section h3:not(.active):hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  letter-spacing: 0.2px;
+  cursor: pointer;
+}
+
+.nav-middle-section h3.active {
+  background-color: var(--color-primary-light);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.nav-bottom-section {
+  /* fix this later with flexbox or EGATOR */
+  position: absolute; 
+  left: 79px;
+  /* 283px */
+  bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-bottom-section button {
+  width: 125px;
+  min-width: 125px;
+  max-width: 125px;
+  height: 34px;
+  min-height: 34px;
+  max-height: 34px;
+  font-size: 16px;
+  border: none;
+  border-radius: var(--button-border-radius);
+  transition: var(--transition);
+}
+
+.nav-bottom-section p {
+  font-size: 10px;
+}
+
+.admin-special-button {
+  margin-bottom: 15px;
+  background-color: var(--color-success-green);
+  color: #fff;
+}
+
+.admin-special-button:hover {
+  background-color: rgba(41, 204, 95, 0.7);
+}
+
+.log-out {
+  outline: 1px solid #2a2a2a;
+  margin-bottom: 15px;
+}
+
+.log-out:hover {
+  background-color: var(--color-danger-red);
+  color: #fff;
+  /* find out how to change color on the fly on hover */
+}
+
+
 
 /*###################################  BUTTON SECTION  ######################################*/
 .buttonSectionContainer {
@@ -36,7 +156,7 @@
   /* margin-left: 87px; */
   position: sticky;
   top: 48px;
-  z-index: 99;
+  z-index: 98;
   background-color: var(--color-grey-backgrund);
 }
 
@@ -66,6 +186,7 @@
     color: white;
     width: 2rem;
     height: 1.2rem;
+}
 
 .floatingButtons {
   font-size: 2rem;
@@ -167,11 +288,11 @@
 
 
 /*###################################  STATS SUB SECTION  ##################################*/
-/* .mainSectionContainer {
+/* .mainSectionContainer <<<<>>>>
   display: grid;
   grid-template-columns: 196px 1fr;
   grid-template-rows: 75px 1fr;
-} */
+<<<<>>>>> */
 
 .stats-section{
   min-width: 85%;
@@ -186,11 +307,11 @@
 
 
 /*###################################  TABLE SUB SECTION  ##################################*/
-/* .mainSectionContainer {
+/* .mainSectionContainer <<<>>>>
   display: grid;
   grid-template-columns: 196px 1fr;
   grid-template-rows: 75px 1fr;
-} */
+ <<<<>>>>>*/
 
 
 .table-section-container {
@@ -206,15 +327,12 @@ table {
   border-spacing: 0;
   table-layout: fixed;
   min-width: 85%;
-  position: absolute;
-  top: 167px;
-  left: 50%;
-  transform: translateX(-50%);
   border: 1px solid black;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: var(--box-shadow);
   margin-bottom: 2rem;
+  margin: auto;
 }
 
 th {
@@ -308,4 +426,3 @@ input[type="checkbox"]:checked, input[type="radio"]:checked {
 tr:first-child td{
   border-top: 1px solid var(--color-primary-900);
 }
-

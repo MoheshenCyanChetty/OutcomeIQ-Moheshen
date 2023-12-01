@@ -1,3 +1,18 @@
+////////////////SIGN.PHP show button in password input///////////////////////
+function togglePassword() {
+  var passwordInput = document.getElementById("password");
+  var showPasswordButton = document.querySelector(".show-password");
+
+  if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      showPasswordButton.textContent = "Hide";
+  } else {
+      passwordInput.type = "password";
+      showPasswordButton.textContent = "Show";
+  }
+}
+
+
 ////////////////INDEX.PHP BUTTON SECTION///////////////////////
 function toggleUploadBox() {
     const uploadBox = document.getElementById('fileInput');
@@ -49,3 +64,22 @@ document.querySelectorAll("tr").forEach((row) => {
     handleCheckboxChange(checkbox);
   });
 });
+
+
+////////////////////////////////DISPLAYING MODULES//////////////////////////////////////
+const h3s = document.querySelectorAll('h3ss');
+  
+  // Initial active state
+  h3s[1].classList.add('active');
+
+  // Click event listener
+  h3s.forEach(h3 => {
+    h3.addEventListener('click', () => {
+      // Deactivate previously active element
+      const currentActive = document.querySelector('.active');
+      if (currentActive) currentActive.classList.remove('active');
+      
+      // Activate clicked element
+      h3.classList.add('active');
+    });
+  });

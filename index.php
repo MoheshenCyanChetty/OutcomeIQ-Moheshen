@@ -1,22 +1,14 @@
 <?php
-
-// if(!isset($_SESSION['userStatus'])){
-//     header('Location: signin.php');      //redirects user if he tries to acces index.php without sigining in
-//     exit();
+require_once('partials/headSection-with-database.php'); //Includes top part of hmtl tags, database connection(which includes constants.php) ,common styles.css, main.js, font-awesome CDN connection(let's u use icons straight from the web without having to download them), .
+// if (!isset($_SESSION['user-id'])) {
+//     header('Location: signin.php'); //rediects user is not signed in
+//     exit;
 // }
-
-require_once('partials/headSection.php'); //Includes top part of hmtl tags, database connection(which includes constants.php) ,common styles.css, main.js, font-awesome CDN connection(let's u use icons straight from the web without having to download them), .
-
 ?>
 
-<link rel="stylesheet" href="css/index.css?v=<?php echo time();?>"> <!--page custom css file-->
+<link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>"> <!--page custom css file-->
 
-</head> <!--Head closing tag is left here so that you can add additional links to the head section such as custom CSS files as seen above-->
-
-
-<!------------------------------------------------------------------------------------------->
-
-
+</head>
 
 <body> <!--start of body-->
 
@@ -29,22 +21,54 @@ require_once('partials/headSection.php'); //Includes top part of hmtl tags, data
 
         <!--SIDE BAR-->
         <div class="sideBarContainer">
+            <div class="nav-top-section">
+                <h2>Modules</h2>
+                <div id="openNavButton" class="inactive"> <i class="fa fa-bars"></i> </div>
+                <div id="closeNavButton"> <i class="fa-solid fa-multiply"></i> </div>
+            </div>
 
-        </div>
+            <!--Modules Side Bar-->
+            <?php
+                $fetch_modules_sql = "
+                SELECT ModuleName FROM tblmodule WHERE LecturerID = 6";
+                $result = $connection->query($fetch_modules_sql);
+            ?>
+
+            <div class="nav-middle-section">
+                <!-- <h3>Programming 742</h3>
+                <h3 class="active">Mobile Application Development 700</h3>
+                <h3>Webtech 512</h3> -->
+
+                <?php
+                while ($row = $result->fetch_assoc()) {
+                    echo '<h3 class= "h3ss">' . $row['ModuleName'] . '</h3>';
+                    }
+                ?>
+
+            </div>
+
+            <div class="nav-bottom-section">
+                <form action="./admin/adminPanel.php">
+                    <button class="admin-special-button">Admin Panel</button>
+                </form>
+                <button class="log-out">Log Out</button>
+                <p class="smallGreyText">Copyright 2023 OutcomeIQ</p>
+            </div>
+
+        </div> <!--end o side bar-->
 
         <!--BUTTON SECTION-->
         <div class="buttonSectionContainer">
             <div class="left-buttons">
 
                 <div class="upload-container">
-                    <button onclick="toggleUploadBox()">Import <i class="fa fa-add"></i></button>
+                    <button class="" onclick="toggleUploadBox()">Import <i class="fa fa-add"></i></button>
 
                     <div class="uploadBox card-styling" id="fileInput">
                         <form action="index.php" method="post" enctype="multipart/form-data">
 
                             <div class="radio-buttons">
-                                <label><input type="radio" name="testType" 
-                               checked="true" value="CA_Test_1"> CA Test 1</label>
+                                <label><input type="radio" name="testType" checked="true" value="CA_Test_1"> CA Test 1</label>
                                 <label><input type="radio" name="testType" value="CA_Test_2"> CA Test 2</label>
                                 <label><input type="radio" name="testType" value="Assignment"> Assignment</label>
                             </div>
@@ -90,7 +114,7 @@ require_once('partials/headSection.php'); //Includes top part of hmtl tags, data
         INNER JOIN tblTestScore ts1 ON s.StudentID = ts1.StudentID AND ts1.TestTypeID = 1
         INNER JOIN tblTestScore ts2 ON s.StudentID = ts2.StudentID AND ts2.TestTypeID = 2
         INNER JOIN tblTestScore ts3 ON s.StudentID = ts3.StudentID AND ts3.TestTypeID = 3
-        INNER JOIN tblModule m ON s.CourseID = m.CourseID AND m.LecturerID = 5 AND m.ModuleID = 15  
+        INNER JOIN tblModule m ON s.CourseID = m.CourseID AND m.LecturerID = 6 AND m.ModuleID = 1  
         WHERE m.CourseID IN (SELECT CourseID FROM tblCourse)";
 
         // Fetch data from the database using the provided SQL query
@@ -100,7 +124,7 @@ require_once('partials/headSection.php'); //Includes top part of hmtl tags, data
         <div class="table-section-container">
 
             <div class="stats-section">
-                
+
             </div>
 
             <table>
