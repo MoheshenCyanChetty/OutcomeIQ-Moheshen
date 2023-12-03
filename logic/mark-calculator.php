@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Mark Calculator - Results</title>
-</head>
 <?php
 class StatsAlgorithm{
     // Calc Required Final mark with Assignment
@@ -89,5 +83,3 @@ class StatsAlgorithm{
     }
 }
 ?>
-
-</html>
