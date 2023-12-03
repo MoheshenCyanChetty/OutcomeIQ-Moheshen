@@ -1,5 +1,5 @@
 <?php
-class StatsAlgorithm{
+class MarkCalculator{
     // Calc Required Final mark with Assignment
     static function calc_ReqFinalMark_Assignment($caTest1, $caTest2, $assignment)
     {
