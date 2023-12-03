@@ -29,11 +29,12 @@
             $accuracy = $shouldUseAssignmentScore; // boolean for accuracy, if true High Accuracy if false, low accuracy
 
             $accuracyString = $shouldUseAssignmentScore ? "High Accuracy Prediction": "Low Accuracy Prediciton";
+            
         }
 
     }
 
-    
+
 
 
 ?>
