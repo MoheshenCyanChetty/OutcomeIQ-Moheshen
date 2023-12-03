@@ -27,17 +27,14 @@
             $probability = number_format(round($probability, 2), 2);
             
             $riskLevel = MarkCalculator::calc_RiskLevel($probability);
-            $accuracy = $shouldUseAssignmentScore; // boolean for accuracy, if true High Accuracy if false, low accuracy
-
-            $accuracyString = $shouldUseAssignmentScore ? "High Accuracy Prediction": "Low Accuracy Prediciton"; // mostly used for displaying
+            $isHighAccuracy = $shouldUseAssignmentScore; // boolean for accuracy, if true High Accuracy if false, low accuracy
            
             // returns associative array of necessary values
             return [
                 "requiredFinalMark" => $requiredFinalExamMark,
                 "probability" => $probability,
                 "riskLevel" => $riskLevel,
-                "accuracy" => $accuracy,
-                "accuracyString" => $accuracyString
+                "isHighAccuracy" => $isHighAccuracy,
             ];
 
         }
