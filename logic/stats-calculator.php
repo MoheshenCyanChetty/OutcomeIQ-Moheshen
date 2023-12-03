@@ -31,7 +31,7 @@
            
             // returns associative array of necessary values
             return [
-                "requiredFinalMark" => $requiredFinalExamMark,
+                "requiredFinalExamMark" => $requiredFinalExamMark,
                 "probability" => $probability,
                 "riskLevel" => $riskLevel,
                 "isHighAccuracy" => $isHighAccuracy,
