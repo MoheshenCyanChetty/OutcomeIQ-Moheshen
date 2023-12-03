@@ -1,7 +1,7 @@
 <?php
 class StatsAlgorithm{
     // Calc Required Final mark with Assignment
-    function calc_ReqFinalMark_Assignment($caTest1, $caTest2, $assignment)
+    static function calc_ReqFinalMark_Assignment($caTest1, $caTest2, $assignment)
     {
         $weightageTest1 = 15;
         $weightageTest2 = 15;
@@ -16,7 +16,7 @@ class StatsAlgorithm{
     }
 
     // calc probability with assignment
-    function calc_probability_assignment($caTest1, $caTest2, $assignment, $requiredFinalMark)
+    static function calc_probability_assignment($caTest1, $caTest2, $assignment, $requiredFinalMark)
     {
         $weightageTest1 = 15;
         $weightageTest2 = 15;
@@ -36,7 +36,7 @@ class StatsAlgorithm{
     }
 
     // calc Req. Final mark no assignment
-    function calc_ReqFinalMark($caTest1, $caTest2)
+    static function calc_ReqFinalMark($caTest1, $caTest2)
     {
         $weightageTest1 = 15;
         $weightageTest2 = 15;
@@ -50,7 +50,7 @@ class StatsAlgorithm{
     }
 
     // calc probability no assignment
-    function calc_probability($caTest1, $caTest2, $requiredFinalMark)
+    static function calc_probability($caTest1, $caTest2, $requiredFinalMark)
     {
         $weightageTest1 = 15;
         $weightageTest2 = 15;
@@ -69,7 +69,7 @@ class StatsAlgorithm{
 
 
     // calc risk level
-    function calc_RiskLevel($probability){
+    static function calc_RiskLevel($probability){
         if ($probability <= ((1 / 3) * 100)){
             return "High";
 
