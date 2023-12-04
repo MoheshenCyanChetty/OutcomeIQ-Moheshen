@@ -1,3 +1,18 @@
+////////////////SIGN.PHP show button in password input///////////////////////
+function togglePassword() {
+  var passwordInput = document.getElementById("password");
+  var showPasswordButton = document.querySelector(".show-password");
+
+  if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      showPasswordButton.textContent = "Hide";
+  } else {
+      passwordInput.type = "password";
+      showPasswordButton.textContent = "Show";
+  }
+}
+
+
 ////////////////INDEX.PHP BUTTON SECTION///////////////////////
 function toggleUploadBox() {
     const uploadBox = document.getElementById('fileInput');
@@ -48,4 +63,29 @@ document.querySelectorAll("tr").forEach((row) => {
     checkbox.checked = !checkbox.checked;
     handleCheckboxChange(checkbox);
   });
+});
+
+
+////////////////////DISPLAYING MODULES///////////////////////
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all elements with class 'h3ss'
+  var h3Elements = document.querySelectorAll('.h3ss');
+
+  // Add click event listener to each h3 element
+  h3Elements.forEach(function(element, index) {
+      element.addEventListener('click', function() {
+          // Remove 'active' class from all h3 elements
+          h3Elements.forEach(function(e) {
+              e.classList.remove('active');
+          });
+
+          // Add 'active' class to the clicked h3 element
+          element.classList.add('active');
+      });
+  });
+
+  // Add 'active' class to the second h3 element initially
+  if (h3Elements.length >= 2) {
+      h3Elements[1].classList.add('active');
+  }
 });

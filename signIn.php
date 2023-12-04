@@ -1,28 +1,19 @@
 <?php
+require_once('partials/headSection-with-database.php');
+header('Cache-Control: no-cache, no-store, must-revalidate');
 
-// if(!isset($_SESSION['userStatus'])){
-//     header('Location: signin.php');      //redirects user if he tries to acces index.php without sigining in
-//     exit();
-// }
+$userEmail = $_POST['signin-data']['userEmail'];
+$userPassword = $_POST['signin-data']['userPassword'];
 
-// require_once('partials/headSection.php'); 
-//Includes top part of hmtl tags, database connection(which includes constants.php) ,common styles.css, main.js, font-awesome CDN connection(let's u use icons straight from the web without having to download them), .
+unset($_SESSION['signin-data']);
 
 ?>
 
 <link rel="stylesheet" href="css/sign-in.css"> <!--page custom css file-->
 
 <title>Sign in to OutcomeIQ</title>
-<style>
-    .signInPageBody{
-    background-image: url('css/homeBackground.jpeg');
-    background-size:cover;
-    background-repeat:no-repeat;
-    display: grid;
-    place-items: center;
-  }
-</style>
 </head>
+
 <body class="signInPageBody">
 
     <div class="logInformContainer">
@@ -32,18 +23,23 @@
                 <img class="signInLogo" src="images/LogoBlackTextOutcomeIQ.svg" alt="OutcomeIQ Logo">
                 <h4 class="smallGreyText">Sign in to continue</h4>
             </div>
-            
-            <form action="index.php" method="POST">
+
+            <form action="signin-logic.php" method="POST">
                 <div class="formHolder">
                     <div class="formItem">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="email">
+                        <input type="email" id="email" name="userEmail" value="<?= $userEmail?>">
                     </div>
 
-                    <div class="formItem">
+                    <div class="formItem show-box">
                         <label for="password">Password</label>
-                        <input type="password" id="password" name="password">  
-                        <div class="show-password" onclick="togglePassword()">Show</div> 
+                        <input type="password" id="password" name="userPassword" value="<?= $userPassword?>">
+
+                        <div class="show-password" onclick="togglePassword()">Show</div>
+
+                        <div class="alert-message">
+                            <p><i class="fa-solid fa-circle-exclamation"></i> Wrong Email or password</p>
+                        </div>
                     </div>
 
                     <div class="ForgotPassword">
@@ -53,30 +49,23 @@
                     </div>
 
                     <div class="btnContainer">
-                        <button type="submit">Sign In</button>
+                        <button type="submit" name="submit-button">Sign In</button>
                     </div>
                 </div>
             </form>
         </div>
- 
+
 
         <div class="rightSide">
-            <img src="images/SignInPageVisual.svg" alt="">
+            <img class="dope-gent-looking-at-pie-chart" src="images/SignInPageVisual.svg" alt="">
         </div>
     </div>
-</body>
-<script>
-function togglePassword() {// code for the show button in password input
-    var passwordInput = document.getElementById("password");
-    var showPasswordButton = document.querySelector(".show-password");
 
-    if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        showPasswordButton.textContent = "Hide";
-    } else {
-        passwordInput.type = "password";
-        showPasswordButton.textContent = "Show";
-    }
-}
-</script>
+    <?php
+        
+    ?>
+
+
+</body>
+
 </html>

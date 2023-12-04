@@ -1,132 +1,241 @@
 /* (((((((signinPHP)))))))))))))))))))))))))))))))))) */
-*{
-    box-sizing: border-box;
-    
-  }
-  html, body{
-    padding: 0;
-    margin: 0;
-    height:100%;
-  }
-  
-  
-  
-  
-  
-  .logInformContainer{
-    display: flex;
-  
-    width: 960px;
-    height: 60vh;
-    place-items: center;
-    background: white;
-    border-radius: 10px;
-  }
-  
-  .forgotPassword a:hover{
-    font-size: 14px;
-  }
-  .leftSide{
-    height: 100%;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 50px;
-  }
-  .logInformHeader{
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   margin-bottom: 50px;
-  }
-  form{
-    width:100%;
-   
-  }
-  .formHolder{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-  
-  }
-  .signInLogo{
-    width: 300px;
-   
-  }
-  .formItem input{
-    border: 1px solid black;
-    height: 55px;
-    padding: 0 2rem;
-    width: 100%;
-    outline: none;
-    transition: background .5s;
-    font-size: 18px;
-    border-radius: 10px;
-    margin-bottom: 30px; 
-   
-  }
-  .formItem label{
-    display:inline-block;
-    background-color: white;
-    margin-bottom: 10px;
-    position: absolute;
-    padding: 0 10px;
-    transform: translate(30px,-10px);
-    font-size: 14px;
-  }
-  button{
-    border: none;
-    background:#6D21D9;
-    color: #EFE9F6;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 18px;
-    height: 40px;
-    cursor:pointer;
-    width: 10vw;
-  
-  
-  }
-  .btnContainer{
-    display: flex;
-    justify-content: center;
-  }
-  .ForgotPassword{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 2vh;
-    
-    
-  }
-  
-  a{
-    text-decoration: none;
-    font-size: 1vw;
-    color: #322d39;
-  }
-  /* .password-container {
-    position: relative;
-   
-}*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+.signInPageBody{
+  background-image: url('../images/homeBackground.jpeg');
+  background-size:cover;
+  background-repeat:no-repeat;
+  display: grid;
+  place-items: center;
+}
+
+.logInformContainer {
+  display: flex;
+  width: 960px;
+  height: 85vh;
+  place-items: center;
+  background: white;
+  border-radius: 10px;
+}
+
+.leftSide {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px;
+}
+.logInformHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px;
+}
+form {
+  width: 100%;
+}
+.formHolder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.signInLogo {
+  width: 300px;
+}
+.formItem input {
+  border: 1px solid black;
+  height: 55px;
+  padding: 0 1.6rem;
+  width: 284px;
+  outline: none;
+  transition: all 0.5s;
+  font-size: 15px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.formItem input:focus {
+  border-color: var(--color-primary);
+}
+
+.formItem label {
+  display: inline-block;
+  background-color: white;
+  margin-bottom: 10px;
+  position: absolute;
+  padding: 0 10px;
+  transform: translate(30px, -10px);
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.formItem input:focus + label {
+  color: var(--color-primary);
+}
+
+.btnContainer button {
+  border: none;
+  background: #6d21d9;
+  color: #efe9f6;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 18px;
+  height: 40px;
+  cursor: pointer;
+  min-width: 172px;
+  padding-left: 5px;
+  padding-right: 5px;
+  transition: all 230ms ease-in-out;
+}
+
+.btnContainer button:hover {
+  background-color: var(--color-primary-700);
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.ForgotPassword {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2vh;
+  margin-top: 20px;
+}
+
+.forgotPassword a:hover {
+  letter-spacing: 0.6px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 15px;
+  color: #322d39;
+}
+
+.show-box {
+  position: relative;
+  transition: var(--transition);
+}
 
 .show-password {
-   display: inline-block;
-    position: absolute;
-    top: 56%;
-    left: 42vw;
-   
-    /* transform: translateY(-50%); */
-    cursor: pointer;
-    color: #6D21D9; 
-} 
-  /* for disabling the password icon */
-input[type=password]::-ms-reveal {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  cursor: pointer;
+  color: var(--color-primary);
+  transition: var(--transition);
+  font-weight: 500;
+}
+
+.show-password:hover {
+  color: var(--color-primary-900);
+  letter-spacing: 0.2px;
+}
+
+.alert-message{
+  position: absolute;
+  bottom: 1px;
+  left: 15px;
+  color: var(--color-danger-red);
+  font-weight: 500;
+}
+
+/* for disabling the password icon */
+input[type="password"]::-ms-reveal {
   display: none;
 }
-input[type=password] {
+input[type="password"] {
   -webkit-text-security: none;
 }
 
+
+
+/* --------------MEDIA QUERIES----------------------- */
+
+/* @970px */
+@media (max-width: 970px) {
+  /* Styles for devices with width <= 970px */
+  body {
+    font-size: 14px;
+  }
+
+  .signInLogo {
+    width: 240px;
+  }
+
+  .rightSide {
+    display: none;
+  }
+
+  .logInformContainer {
+    justify-content: center;
+    width: 85%;
+    
+  }
   
+  .leftSide {
+    width: 100%;
+  }
+
+  .formItem input {
+    
+  }
+
+  h4 , a {
+    text-wrap: nowrap;
+  }
+}
+
+
+
+
+/* @420px */
+@media (max-width: 420px) {
+  /* Styles for devices with width <= 420px */
+  body {
+    font-size: 12px;
+    overflow: hidden;
+  }
+
+  .signInLogo {
+    width: 210px;
+  }
+
+  .rightSide {
+    display: none;
+  }
+
+  .logInformContainer {
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;  
+  }
+  
+  .leftSide {
+    width: 100%;
+  }
+
+  .formItem input {
+    width: 240px; 
+    height: 45px;
+  }
+
+  h4 , a {
+    text-wrap: nowrap;
+  }
+}
