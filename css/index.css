@@ -14,7 +14,7 @@
   height: 100vh;
   width: 283px;
   z-index: 99;
-  background-color: var(--color-grey-backgrund);
+  background-color: var(--color-grey-backgrund); 
   position: fixed;
   top: 48px;
   left: 0px;
@@ -89,8 +89,27 @@
   font-size: 14px;
 }
 
+.zero-risk {
+  color: var(--color-success-green);
+  background-color: var(--color-success-light-green);
+}
+
+.one-risk {
+  color: var(--color-warning-orange);
+  background-color: var(--color-warning-light-orange);
+}
+
+.two-risk {
+  color: var(--color-danger-red);
+  background-color: var(--color-danger-light-red);
+}
+
+.zero-risk, .one-risk, .two-risk {
+  font-weight: 900;
+  font-size: 12px;
+}
+
 .nav-bottom-section {
-  /* fix this later with flexbox or EGATOR */
   position: absolute; 
   left: 79px;
   /* 283px */
@@ -156,7 +175,7 @@
   /* margin-left: 87px; */
   position: sticky;
   top: 48px;
-  z-index: 98;
+  z-index: 101;
   background-color: var(--color-grey-backgrund);
 }
 
@@ -257,7 +276,7 @@
   border-radius: var(--card-border-radius);
   padding: 20px;
   transition: var(--transition);
-  z-index: var(--z-index-100);
+  z-index: 999;
   width: 0;
   height: 0;
 }
@@ -267,6 +286,11 @@
   height: auto;
   opacity: 1;
   pointer-events: auto;
+  z-index: 999z;
+}
+
+.uploadbox.active + .buttonSectionContainer {
+  z-index: 101;
 }
 
 .file-submit-button {
@@ -333,6 +357,13 @@ table {
   box-shadow: var(--box-shadow);
   margin-bottom: 2rem;
   margin: auto;
+}
+
+table tr td:last-child {
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 th {

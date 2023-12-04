@@ -66,20 +66,26 @@ document.querySelectorAll("tr").forEach((row) => {
 });
 
 
-////////////////////////////////DISPLAYING MODULES//////////////////////////////////////
-const h3s = document.querySelectorAll('h3ss');
-  
-  // Initial active state
-  h3s[1].classList.add('active');
+////////////////////DISPLAYING MODULES///////////////////////
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all elements with class 'h3ss'
+  var h3Elements = document.querySelectorAll('.h3ss');
 
-  // Click event listener
-  h3s.forEach(h3 => {
-    h3.addEventListener('click', () => {
-      // Deactivate previously active element
-      const currentActive = document.querySelector('.active');
-      if (currentActive) currentActive.classList.remove('active');
-      
-      // Activate clicked element
-      h3.classList.add('active');
-    });
+  // Add click event listener to each h3 element
+  h3Elements.forEach(function(element, index) {
+      element.addEventListener('click', function() {
+          // Remove 'active' class from all h3 elements
+          h3Elements.forEach(function(e) {
+              e.classList.remove('active');
+          });
+
+          // Add 'active' class to the clicked h3 element
+          element.classList.add('active');
+      });
   });
+
+  // Add 'active' class to the second h3 element initially
+  if (h3Elements.length >= 2) {
+      h3Elements[1].classList.add('active');
+  }
+});

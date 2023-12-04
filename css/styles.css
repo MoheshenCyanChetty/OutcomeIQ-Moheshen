@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
 
 :root {
   --color-primary: #6d21d9;
@@ -7,10 +7,11 @@
   --color-success-green: #29cc5f;
   --color-success-light-green: rgba(41, 204, 95, 0.35);
   --color-warning-orange: #e39517;
-  --color-success-light-orange: hsl(25, 47, 86);
+  --color-warning-light-orange: rgba(227, 149, 23, 0.35);
   --color-danger-red: #e5202a;
-  --color-success-light-red: hsl(343, 56, 84);
+  --color-danger-light-red: rgba(229, 32, 42, 0.35);
   --color-information-blue: #1c5fe5;
+  --color-information-blue-light: rgba(28, 95, 229, 0.1);
   --color-primary-100: #d8c7ef;
   --color-primary-300: #9b5af6;
   --color-primary-700: #4601a7;
@@ -89,7 +90,7 @@ button {
   cursor: pointer;
 }
 
-/*##################################  NAVIGATION BAR  ####################################*/
+/*#########################  NAVIGATION BAR  ############################*/
 nav {
   max-height: 48px;
   width: 100%;

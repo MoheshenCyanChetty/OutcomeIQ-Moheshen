@@ -1,9 +1,16 @@
 <?php
 require_once('partials/headSection-with-database.php'); //Includes top part of hmtl tags, database connection(which includes constants.php) ,common styles.css, main.js, font-awesome CDN connection(let's u use icons straight from the web without having to download them), .
-// if (!isset($_SESSION['user-id'])) {
-//     header('Location: signin.php'); //rediects user is not signed in
-//     exit;
-// }
+
+
+// USE THESE VARIABLES FOR CRUD OPERATIONS
+$_SESSION['user-id'] = 2;
+$_SESSION['module-id'] = 5;
+
+
+if (!isset($_SESSION['user-id'])) {
+    header('Location: signin.php'); //rediects user is not signed in
+    exit;
+}
 ?>
 
 <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>"> <!--page custom css file-->
@@ -29,23 +36,39 @@ require_once('partials/headSection-with-database.php'); //Includes top part of h
 
             <!--Modules Side Bar-->
             <?php
-                $fetch_modules_sql = "
-                SELECT ModuleName FROM tblmodule WHERE LecturerID = 6";
-                $result = $connection->query($fetch_modules_sql);
+            $fetch_modules_sql = "
+                SELECT ModuleName FROM tblmodule WHERE LecturerID = 2";
+            $result = $connection->query($fetch_modules_sql);
             ?>
 
             <div class="nav-middle-section">
-                <!-- <h3>Programming 742</h3>
-                <h3 class="active">Mobile Application Development 700</h3>
-                <h3>Webtech 512</h3> -->
-
                 <?php
+                $i = 1;
                 while ($row = $result->fetch_assoc()) {
-                    echo '<h3 class= "h3ss">' . $row['ModuleName'] . '</h3>';
-                    }
+                    echo '<h3 class="h3ss" data-index="' . $i . '">' . $row['ModuleName'] . '</h3>';
+                    $i++;
+                }
                 ?>
 
-            </div>
+                <!-- ELECTIVES -->
+            <?php
+            $fetch_electiveModules_sql = "
+                SELECT ElectiveModuleName FROM tblelective WHERE LecturerID = 2";
+            $result = $connection->query($fetch_electiveModules_sql);
+            ?>
+
+            <?php
+            $i = 1;
+            while ($row = $result->fetch_assoc()) {
+                echo '<h3 class="h3ss" data-index="' . $i . '">' . $row['ElectiveModuleName'] . '</h3>';
+                $i++;
+            }
+            ?> <!--End of Elective Modules List-->
+
+            </div> <!--End of Module List-->
+
+
+
 
             <div class="nav-bottom-section">
                 <form action="./admin/adminPanel.php">
@@ -64,7 +87,7 @@ require_once('partials/headSection-with-database.php'); //Includes top part of h
                 <div class="upload-container">
                     <button class="" onclick="toggleUploadBox()">Import <i class="fa fa-add"></i></button>
 
-                    <div class="uploadBox card-styling" id="fileInput">
+                    <div class="uploadBox" id="fileInput">
                         <form action="index.php" method="post" enctype="multipart/form-data">
 
                             <div class="radio-buttons">
@@ -100,25 +123,28 @@ require_once('partials/headSection-with-database.php'); //Includes top part of h
         <!--STUDENTS TABLE-->
         <?php
 
-        $SQLquery = "
+        $fetch_modules_sql = "
         SELECT DISTINCT
             s.StudentNumber,
             CONCAT(s.FirstName, ' ', s.LastName) AS 'Student Name',
             ts1.Score AS 'CA Test 1',
             ts2.Score AS 'CA Test 2',
             ts3.Score AS 'Assignment',
-            s.markToPassExam AS 'Exam',
-            s.RiskLevel AS 'Risk',
-            s.LecturersComment AS 'Comment'
-        FROM tblStudent s
-        INNER JOIN tblTestScore ts1 ON s.StudentID = ts1.StudentID AND ts1.TestTypeID = 1
-        INNER JOIN tblTestScore ts2 ON s.StudentID = ts2.StudentID AND ts2.TestTypeID = 2
-        INNER JOIN tblTestScore ts3 ON s.StudentID = ts3.StudentID AND ts3.TestTypeID = 3
-        INNER JOIN tblModule m ON s.CourseID = m.CourseID AND m.LecturerID = 6 AND m.ModuleID = 1  
-        WHERE m.CourseID IN (SELECT CourseID FROM tblCourse)";
+            mtp.MarkToPass AS 'Exam',
+            rl.RiskLevel AS 'Risk',
+            lc.LecturersComment AS 'Comment'
+            FROM tblStudent s
+            INNER JOIN tblTestScore ts1 ON s.StudentID = ts1.StudentID AND ts1.TestTypeID = 1
+            INNER JOIN tblTestScore ts2 ON s.StudentID = ts2.StudentID AND ts2.TestTypeID = 2
+            INNER JOIN tblTestScore ts3 ON s.StudentID = ts3.StudentID AND ts3.TestTypeID = 3
+            INNER JOIN tblModule m ON s.CourseID = m.CourseID AND m.LecturerID = {$_SESSION['user-id']} AND m.ModuleID = {$_SESSION['module-id']}
+            LEFT JOIN tblmarktopassexam mtp ON s.StudentID = mtp.StudentID AND m.ModuleID = mtp.ModuleID
+            LEFT JOIN tblrisklevel rl ON s.StudentID = rl.StudentID AND m.ModuleID = rl.ModuleID
+            LEFT JOIN tblcomment lc ON s.StudentID = lc.StudentID AND m.ModuleID = lc.ModuleID
+            WHERE m.CourseID IN (SELECT CourseID FROM tblCourse);";
 
-        // Fetch data from the database using the provided SQL query
-        $result = $connection->query($SQLquery);
+        // Fetch data from the database
+        $module_sql_result = $connection->query($fetch_modules_sql);
         ?>
 
         <div class="table-section-container">
@@ -143,7 +169,7 @@ require_once('partials/headSection-with-database.php'); //Includes top part of h
                 </thead>
                 <tbody>
                     <?php
-                    while ($row = $result->fetch_assoc()) {
+                    while ($row = $module_sql_result->fetch_assoc()) {
                         echo '<tr>';
                         echo '<td><input type="checkbox" class="recordCheckbox" name="selectedRecord" value="' . $row['StudentNumber'] . '" onchange="handleCheckboxChange(this)"></td>';
                         echo '<td>' . $row['StudentNumber'] . '</td>';
@@ -151,8 +177,39 @@ require_once('partials/headSection-with-database.php'); //Includes top part of h
                         echo '<td>' . $row['CA Test 1'] . '</td>';
                         echo '<td>' . $row['CA Test 2'] . '</td>';
                         echo '<td>' . $row['Assignment'] . '</td>';
-                        echo '<td>' . $row['Exam'] . '</td>';
-                        echo '<td>' . $row['Risk'] . '</td>';
+
+                        $markToPassExam = $row['Exam'];
+                        echo '<td>';
+                        if ($markToPassExam == 0) {
+                            echo '-';
+                        } else {
+                            echo $markToPassExam;
+                        }
+                        echo '</td>';
+
+
+                        // Assigning the appropriate class based on RiskLevel
+                        $riskLevel = $row['Risk'];
+                        $riskClass = '';
+                        if ($riskLevel == 0) {
+                            $riskClass = 'zero-risk';
+                        } elseif ($riskLevel == 1) {
+                            $riskClass = 'one-risk';
+                        } elseif ($riskLevel == 2) {
+                            $riskClass = 'two-risk';
+                        }
+
+                        echo '<td class="' . $riskClass . '">';
+                        if ($riskLevel == 0) {
+                            echo 'Low';
+                        } elseif ($riskLevel == 1) {
+                            echo 'Moderate';
+                        } elseif ($riskLevel == 2) {
+                            echo 'High';
+                        }
+                        echo '</td>';
+
+
                         echo '<td>' . $row['Comment'] . '</td>';
                         echo '</tr>';
                     }
@@ -166,6 +223,9 @@ require_once('partials/headSection-with-database.php'); //Includes top part of h
         </div>
 
         <!--------------------------END OF TABLE------------------------->
+
+
+        
         <!-- remove later -->
         <div class="hidden-element floatingButtons">Button float</div>
 
