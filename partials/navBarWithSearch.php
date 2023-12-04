@@ -15,8 +15,5 @@ require_once('config/database.php');
                 YN
             </div>
         </div>   
-
-        <button id="openNavButton"> <i class="fa fa-bars"></i> </button>
-        <button id="closeNavButton"> <i class="fa-solid fa-greater-than"></i> </button>
     </div> <!--END OF NAV CONTAINER-->
 </nav>
