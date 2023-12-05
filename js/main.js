@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Add 'active' class to the second h3 element initially
-  if (h3Elements.length >= 2) {
-      h3Elements[1].classList.add('active');
+  if (h3Elements.length >= 1) {
+      h3Elements[0].classList.add('active');
   }
 });
