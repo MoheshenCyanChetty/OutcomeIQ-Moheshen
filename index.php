@@ -4,11 +4,7 @@ require_once('partials/headSection-with-database.php'); //Includes top part of h
 $_SESSION['user-id'] = 2;
 $_SESSION['module-id'] = 5;
 
-
-if (!isset($_SESSION['user-id']) || !isset($_SESSION["signed-in"])) {
-    header('Location: signin.php'); //rediects user is not signed in
-    exit;
-}
+require_once('user-redirector.php');
 ?>
 
 <link rel="stylesheet" href="css/index.css?v=<?php echo time(); ?>"> <!--page custom css file-->
@@ -70,7 +66,7 @@ if (!isset($_SESSION['user-id']) || !isset($_SESSION["signed-in"])) {
 
             <div class="nav-bottom-section">
                 <form action="./admin/adminPanel.php">
-                    <button class="admin-special-button">Admin Panel</button>
+                    <button class="admin-special-button" name="admin-button">Admin Panel</button>
                 </form>
                 <a href="logout.php"><button class="log-out">Log Out</button></a>
                 <p class="smallGreyText">Copyright 2023 OutcomeIQ</p>
