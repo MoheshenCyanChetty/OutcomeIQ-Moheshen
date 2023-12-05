@@ -1,9 +1,6 @@
 <?php
 require_once('partials/headSection-with-database.php');
-header('Cache-Control: no-cache, no-store, must-revalidate');
 
-$userEmail = $_POST['signin-data']['userEmail'];
-$userPassword = $_POST['signin-data']['userPassword'];
 
 unset($_SESSION['signin-data']);
 
