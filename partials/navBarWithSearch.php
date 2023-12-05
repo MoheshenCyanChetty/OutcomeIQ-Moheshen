@@ -24,7 +24,7 @@ $LInitials = $row['LFirstName'][0] . $row['LLastName'][0];
 
 <nav>
     <div class="navContainer">
-        <div><img src="images/LogoWhiteTextOutcomeIQ.svg" alt=""></div>
+        <div><a href="#"><img src="images/LogoWhiteTextOutcomeIQ.svg" alt=""></a></div>
         <div class="searchBox">
             <i class="fa fa-magnifying-glass magGlass"></i>
             <input type="search" id="search-input" placeholder="Search">
