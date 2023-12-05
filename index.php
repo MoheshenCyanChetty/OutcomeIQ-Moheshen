@@ -1,13 +1,11 @@
 <?php
 require_once('partials/headSection-with-database.php'); //Includes top part of hmtl tags, database connection(which includes constants.php) ,common styles.css, main.js, font-awesome CDN connection(let's u use icons straight from the web without having to download them), .
-
-
 // USE THESE VARIABLES FOR CRUD OPERATIONS
 $_SESSION['user-id'] = 2;
 $_SESSION['module-id'] = 5;
 
 
-if (!isset($_SESSION['user-id'])) {
+if (!isset($_SESSION['user-id']) || !isset($_SESSION["signed-in"])) {
     header('Location: signin.php'); //rediects user is not signed in
     exit;
 }
@@ -74,7 +72,7 @@ if (!isset($_SESSION['user-id'])) {
                 <form action="./admin/adminPanel.php">
                     <button class="admin-special-button">Admin Panel</button>
                 </form>
-                <button class="log-out">Log Out</button>
+                <a href="logout.php"><button class="log-out">Log Out</button></a>
                 <p class="smallGreyText">Copyright 2023 OutcomeIQ</p>
             </div>
 
