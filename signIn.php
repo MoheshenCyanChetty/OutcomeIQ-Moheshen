@@ -1,8 +1,30 @@
 <?php
 require_once('partials/headSection-with-database.php');
 
+$is_invalid = false;
 
-unset($_SESSION['signin-data']);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $fetch_user_sql = sprintf(
+        "SELECT * FROM tbllecturer
+                    WHERE UserEmail = '%s'",
+        $connection->real_escape_string($_POST["email"])
+    );
+
+    $result = $connection->query($fetch_user_sql);
+    $user = $result->fetch_assoc();
+
+    if ($user) {
+        if (password_verify(trim($_POST["password"]), $user["PasswordHashed"])) {
+            session_regenerate_id();
+            $_SESSION["user-id"] = $user["LecturerID"];
+            $_SESSION["signed-in"] = 1;
+            header("Location: index.php");
+            exit;
+        }
+    }
+    $is_invalid = true;
+}
+
 
 ?>
 
@@ -21,22 +43,25 @@ unset($_SESSION['signin-data']);
                 <h4 class="smallGreyText">Sign in to continue</h4>
             </div>
 
-            <form action="signin-logic.php" method="POST">
+            <form method="POST">
                 <div class="formHolder">
                     <div class="formItem">
                         <label for="email">Email</label>
-                        <input type="email" id="email" name="userEmail" value="<?= $userEmail?>">
+                        <input type="email" name="email" id="email" value="<?= htmlspecialchars($_POST["email"] ?? "") ?>">
                     </div>
 
                     <div class="formItem show-box">
                         <label for="password">Password</label>
-                        <input type="password" id="password" name="userPassword" value="<?= $userPassword?>">
+                        <input type="password" name="password" id="password">
 
                         <div class="show-password" onclick="togglePassword()">Show</div>
 
-                        <div class="alert-message">
-                            <p><i class="fa-solid fa-circle-exclamation"></i> Wrong Email or password</p>
-                        </div>
+                        <?php if ($is_invalid) : ?>
+                            <div class="alert-message">
+                                <p><i class="fa-solid fa-circle-exclamation"></i> Invalid Input</p>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
 
                     <div class="ForgotPassword">
@@ -59,7 +84,7 @@ unset($_SESSION['signin-data']);
     </div>
 
     <?php
-        
+
     ?>
 
 
