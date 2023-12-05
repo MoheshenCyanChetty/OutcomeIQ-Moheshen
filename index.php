@@ -49,19 +49,19 @@ if (!isset($_SESSION['user-id']) || !isset($_SESSION["signed-in"])) {
                 ?>
 
                 <!-- ELECTIVES -->
-            <?php
-            $fetch_electiveModules_sql = "
+                <?php
+                $fetch_electiveModules_sql = "
                 SELECT ElectiveModuleName FROM tblelective WHERE LecturerID = 2";
-            $result = $connection->query($fetch_electiveModules_sql);
-            ?>
+                $result = $connection->query($fetch_electiveModules_sql);
+                ?>
 
-            <?php
-            $i = 1;
-            while ($row = $result->fetch_assoc()) {
-                echo '<h3 class="h3ss" data-index="' . $i . '">' . $row['ElectiveModuleName'] . '</h3>';
-                $i++;
-            }
-            ?> <!--End of Elective Modules List-->
+                <?php
+                $i = 1;
+                while ($row = $result->fetch_assoc()) {
+                    echo '<h3 class="h3ss" data-index="' . $i . '">' . $row['ElectiveModuleName'] . '</h3>';
+                    $i++;
+                }
+                ?> <!--End of Elective Modules List-->
 
             </div> <!--End of Module List-->
 
@@ -143,7 +143,7 @@ if (!isset($_SESSION['user-id']) || !isset($_SESSION["signed-in"])) {
 
         // Fetch data from the database for calculation
         $module_sql_result = $connection->query($fetch_modules_sql);
-        
+
 
         // -------------------------- ALGORITHM IMPLEMENTATION -------------------------- //
         require_once('logic/stats-calculator.php');
@@ -181,16 +181,16 @@ if (!isset($_SESSION['user-id']) || !isset($_SESSION["signed-in"])) {
                     WHERE m.CourseID IN (SELECT CourseID FROM tblCourse)
                 )";
 
-                if (mysqli_multi_query($connection, $updateQuery)) {
-                    do {
-                        // Store and free the result set
-                        if ($result = mysqli_store_result($connection)) {
-                            mysqli_free_result($result);
-                        }
-                    } while (mysqli_next_result($connection));
-                } else {
-                    echo "Query Error: " . mysqli_error($connection);
-                }
+            if (mysqli_multi_query($connection, $updateQuery)) {
+                do {
+                    // Store and free the result set
+                    if ($result = mysqli_store_result($connection)) {
+                        mysqli_free_result($result);
+                    }
+                } while (mysqli_next_result($connection));
+            } else {
+                echo "Query Error: " . mysqli_error($connection);
+            }
         }
         // -------------------------- ALGORITHM IMPLEMENTATION END -------------------------- //
 
@@ -202,7 +202,88 @@ if (!isset($_SESSION['user-id']) || !isset($_SESSION["signed-in"])) {
         <div class="table-section-container">
 
             <div class="stats-section">
+                <div class="left-color-box">
+                    <div class="key-box">
+                        <p>Key</p>
+                        <div class="obtained">
+                            <div class="tiny-square tiny-square1"></div>
+                            <div>Student Obtained Mark</div>
+                        </div>
+                        <div class="required-mark">
+                            <div class="tiny-square tiny-square2"></div>
+                            <div>Mark required to pass semester</div>
+                        </div>
+                    </div>
+                    <h2>Operations Systems 700</h2>
+                </div>
 
+
+
+
+                <!-- Fetch Counters -->
+                <?php
+                $fetch_counters_sql = "
+                SELECT
+    COUNT(*) AS TotalRecords,
+    COUNT(CASE WHEN rl.RiskLevel = 1 THEN 1 END) AS RiskLevel1Count,
+    COUNT(CASE WHEN rl.RiskLevel = 2 THEN 1 END) AS RiskLevel2Count
+FROM
+    tblstudent s
+    INNER JOIN tblModule m ON s.CourseID = m.CourseID AND m.LecturerID = {$_SESSION['user-id']} AND m.ModuleID = {$_SESSION['module-id']}
+    LEFT JOIN tblrisklevel rl ON s.StudentID = rl.StudentID AND m.ModuleID = rl.ModuleID
+WHERE
+    m.CourseID IN (SELECT CourseID FROM tblCourse);
+";
+
+                $counters_result = $connection->query($fetch_counters_sql);
+
+                $row = mysqli_fetch_assoc($counters_result);
+                $totalRecords = $row['TotalRecords'];
+                $riskLevel1Count = $row['RiskLevel1Count'];
+                $riskLevel2Count = $row['RiskLevel2Count'];
+                ?>
+
+                <div class="stat-box1 color-box">
+                    <div class="color-box-title cbt1">
+                        Total No. Students
+                    </div>
+
+                    <div class="color-box-counter">
+                        <div class="color-counter"><?= $totalRecords ?></div>
+                        <div class="color-icon">
+                            <i class="fa fa-user-group"></i>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="stat-box2 color-box">
+                    <div class="color-box-title cbt2">
+                        Moderate Risk
+                    </div>
+
+                    <div class="color-box-counter">
+                        <div class="color-counter"><?= $riskLevel1Count ?></div>
+                        <div class="color-icon">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="stat-box3 color-box">
+                    <div class="color-box-title cbt3">
+                        High Risk
+                    </div>
+
+                    <div class="color-box-counter">
+                        <div class="color-counter"><?= $riskLevel2Count ?></div>
+                        <div class="color-icon">
+                            <i class="fa-solid fa-rectangle-xmark"></i>
+                        </div>
+                    </div>
+
+                </div>
             </div>
 
             <table>
@@ -277,9 +358,12 @@ if (!isset($_SESSION['user-id']) || !isset($_SESSION["signed-in"])) {
         <!--------------------------END OF TABLE------------------------->
 
 
-        
+
         <!-- remove later -->
-        <div class="hidden-element floatingButtons">Button float</div>
+        <div class="hidden-element floatingButtons">
+
+
+        </div>
 
 
     </div> <!--main section container-->
