@@ -320,13 +320,61 @@
 
 .stats-section{
   min-width: 85%;
-  height: 150px;
-  background-color: rgba(0, 0, 0, 0.5);
+  height: 200px;
+  /* background-color: rgba(0, 0, 0, 0.5); */
   width: auto;
   padding: 0 2rem;
+  margin: 3rem 0;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  padding: 2rem 0;
+  align-items: center;
 }
 
+.color-box {
+  width: 162px;
+  min-width: 162px;
+  max-width: 162px;
+  height: 92;
+  max-height: 92px;
+  min-height: 92px;
+  border-radius: 7px;
+}
 
+.left-color-box {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.key-box {
+  width: 205px;
+  height: 86px;
+  position: absolute;
+  top: 30px;
+  left: 50px;
+  border-radius: 7px;
+  background-color: #DBDBF5;
+  padding: 10px;
+}
+
+.left-color-box h3 {
+  position: absolute;
+  bottom: -50px;
+  left: 50px;
+}
+
+.stat-box1 {
+  background-color: #C7E3D8;
+}
+
+.stat-box2 {
+  background-color: #ECD8CA;
+}
+
+.stat-box3 {
+  background-color: #EDC0CD;
+}
 
 
 

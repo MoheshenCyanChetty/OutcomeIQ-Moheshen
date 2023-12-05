@@ -148,7 +148,24 @@ if (!isset($_SESSION['user-id']) || !isset($_SESSION["signed-in"])) {
         <div class="table-section-container">
 
             <div class="stats-section">
+                <div class="left-color-box">
+                    <div class="key-box">
+                        <p>Key</p>
+                        <div class="obtained">
 
+                        </div>
+                        <div class="required">
+                            
+                        </div>
+                    </div>
+                    <h3>Operations Systems 700</h3>
+                </div>
+
+                <div class="stat-box1 color-box"></div>
+
+                <div class="stat-box2 color-box"></div>
+
+                <div class="stat-box3 color-box"></div>
             </div>
 
             <table>
@@ -225,7 +242,10 @@ if (!isset($_SESSION['user-id']) || !isset($_SESSION["signed-in"])) {
 
         
         <!-- remove later -->
-        <div class="hidden-element floatingButtons">Button float</div>
+        <div class="hidden-element floatingButtons">
+            
+
+        </div>
 
 
     </div> <!--main section container-->
