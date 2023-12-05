@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (password_verify(trim($_POST["password"]), $user["PasswordHashed"])) {
             session_regenerate_id();
             $_SESSION["user-id"] = $user["LecturerID"];
+            $_SESSION["user-role"] = $user["IsAdmin"];
             $_SESSION["signed-in"] = 1;
             header("Location: index.php");
             exit;
