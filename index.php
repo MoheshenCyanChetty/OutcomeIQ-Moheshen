@@ -143,8 +143,62 @@ if (!isset($_SESSION['user-id'])) {
             LEFT JOIN tblcomment lc ON s.StudentID = lc.StudentID AND m.ModuleID = lc.ModuleID
             WHERE m.CourseID IN (SELECT CourseID FROM tblCourse);";
 
-        // Fetch data from the database
+        // Fetch data from the database for calculation
         $module_sql_result = $connection->query($fetch_modules_sql);
+        
+
+        // -------------------------- ALGORITHM IMPLEMENTATION -------------------------- //
+        require_once('logic/stats-calculator.php');
+
+
+        $statsCalc = new StatsCalculator();
+        $statsArray = [];
+
+        while ($row = $module_sql_result->fetch_assoc()) {
+
+            $statsArray = $statsCalc->calc_stats($row['CA Test 1'], $row['CA Test 2'], $row['Assignment']);
+
+            $markToPassExam = $statsArray['requiredFinalExamMark'];
+            $riskLevel = $statsArray['riskLevel'];
+            $predictionAccuracy = $statsArray['isHighAccuracy'];
+
+
+            // SQL update database - markToPass, *probability, risk level, prediction accuracy ---- *optional, but add column to db later
+            $updateQuery = "
+                UPDATE tblrisklevel
+                SET RiskLevel = '{$riskLevel}', PredictionAccuracy = '{$predictionAccuracy}'
+                WHERE StudentID IN (
+                    SELECT s.StudentID
+                    FROM tblStudent s
+                    INNER JOIN tblModule m ON s.CourseID = m.CourseID AND m.LecturerID = {$_SESSION['user-id']} AND m.ModuleID = {$_SESSION['module-id']}
+                    WHERE m.CourseID IN (SELECT CourseID FROM tblCourse)
+                );
+                
+                UPDATE tblmarktopassexam
+                SET MarkToPass = '{$markToPassExam}'
+                WHERE StudentID IN (
+                    SELECT s.StudentID
+                    FROM tblStudent s
+                    INNER JOIN tblModule m ON s.CourseID = m.CourseID AND m.LecturerID = {$_SESSION['user-id']} AND m.ModuleID = {$_SESSION['module-id']}
+                    WHERE m.CourseID IN (SELECT CourseID FROM tblCourse)
+                )";
+
+                if (mysqli_multi_query($connection, $updateQuery)) {
+                    do {
+                        // Store and free the result set
+                        if ($result = mysqli_store_result($connection)) {
+                            mysqli_free_result($result);
+                        }
+                    } while (mysqli_next_result($connection));
+                } else {
+                    echo "Query Error: " . mysqli_error($connection);
+                }
+        }
+        // -------------------------- ALGORITHM IMPLEMENTATION END -------------------------- //
+
+        // Fetch data from the database again for displaying
+        $module_sql_result = $connection->query($fetch_modules_sql);
+
         ?>
 
         <div class="table-section-container">

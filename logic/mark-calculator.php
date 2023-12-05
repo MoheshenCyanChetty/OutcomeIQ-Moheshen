@@ -71,13 +71,13 @@ class MarkCalculator{
     // calc risk level
     static function calc_RiskLevel($probability){
         if ($probability <= ((1 / 3) * 100)){
-            return "High";
+            return 2; // high
 
         } elseif ($probability <= ((2 / 3) * 100)){
-            return "Medium";
+            return 1; // moderate
 
         } else {
-            return "Low";
+            return 0; // low
 
         }
     }

@@ -31,10 +31,10 @@
            
             // returns associative array of necessary values
             return [
-                "requiredFinalExamMark" => $requiredFinalExamMark,
-                "probability" => $probability,
-                "riskLevel" => $riskLevel,
-                "isHighAccuracy" => $isHighAccuracy,
+                'requiredFinalExamMark' => $requiredFinalExamMark,
+                'probability' => $probability,
+                'riskLevel' => $riskLevel,
+                'isHighAccuracy' => $isHighAccuracy,
             ];
 
         }
