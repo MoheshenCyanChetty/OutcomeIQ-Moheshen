@@ -1,5 +1,5 @@
 <?php
- require_once('database.php'); 
+  require_once('..\\config\\database.php');
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +18,7 @@
 </head>
 
 <body>
+
   <!-- top nav section -->
   <div class="nav">
     <img src="../images/LogoWhiteTextOutcomeIQ.svg" alt="OutcomeIQ White Font logo">

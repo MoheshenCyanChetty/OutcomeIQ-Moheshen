@@ -89,17 +89,70 @@ if (!isset($_SESSION['user-id']) || !isset($_SESSION["signed-in"])) {
                         <form action="index.php" method="post" enctype="multipart/form-data">
 
                             <div class="radio-buttons">
-                                <label><input type="radio" name="testType" checked="true" value="CA_Test_1"> CA Test 1</label>
-                                <label><input type="radio" name="testType" value="CA_Test_2"> CA Test 2</label>
-                                <label><input type="radio" name="testType" value="Assignment"> Assignment</label>
+                                <label><input type="radio" name="testType" value="1"> CA Test 1</label>
+                                <label><input type="radio" name="testType" value="2"> CA Test 2</label>
+                                <label><input type="radio" name="testType" value="3"> Assignment</label>
                             </div>
 
                             <input class="file-upload-button" type="file" name="file" accept=".csv">
-                            <button class="file-submit-button" type="submit">Upload<i class="fa fa-upload"></i></button>
+                            <button class="file-submit-button" name="submit_uploadCSV" type="submit">Upload<i class="fa fa-upload"></i></button>
                         </form>
                     </div>
                 </div>
 
+                <!-- FILE UPLOAD LOGIC -->
+                <?php
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    if(isset($_POST['submit_uploadCSV'])) {
+                        if(isset($_FILES['csv_file']) && $_FILES['csv_file']['error'] == 0 ){
+                            $file_name = $_FILES['csv_file']['name'];
+                            $file_tmp = $_FILES['csv_file']['tmp_name'];
+
+                            // read csv
+                            $fileHandler = fopen($file_tmp, "r");
+
+                            // loop through csv file and update db
+                            while (($data = fgetcsv($fileHandler, 1000, ",")) !== FALSE){
+                                $student_no = $data[0];
+                                $newScore = $data[1];
+
+                                $query_studentID = "
+                                SELECT StudentID 
+                                FROM tblstudent 
+                                WHERE StudentNumber = '$student_no'";
+
+                                $result = $connection->query($query_studentID);
+
+                                // get each row and update score
+                                if($result->num_rows > 0){
+                                    $row = $result->fetch_assoc();
+                                    $student_ID = $row['StudentID'];
+                                    $testTypeID = $_POST['testType'];
+
+                                    $query_updateScore = "
+                                    UPDATE tbltestscore 
+                                    SET Score = '$newScore'
+                                    WHERE StudentID = '$student_ID'
+                                    AND ModuleID = 5,
+                                    AND TestTypeID = '$testTypeID'"; 
+
+                                    // exec query & handle errors
+                                    if ($conn->query($query_updateScore) !== TRUE) {
+                                        error_log("Error updating score for StudentNumber: $studentNumber - " . $conn->error);
+                                    } 
+
+                                }else{
+                                    error_log("Student not found with StudentNumber: $studentNumber<br>");
+                                }
+
+                            }
+                            fclose($fileHandler);
+                        }
+                    }
+                }
+
+                ?>
+                <!-- END FILE UPLOAD LOGIC -->
 
 
                 <form class="charts-button" action="charts.php" method="post">
